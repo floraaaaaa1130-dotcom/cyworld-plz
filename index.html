@@ -6,7 +6,7 @@
   <title>☆-..- 2005년의 어느 날 -..-☆</title>
 
   <style>
-    /* ===== 갈무리 콘덴스드 (로컬 폰트용, 없으면 자동 폴백) ===== */
+    /* ===== 갈무리 콘덴스드 ===== */
     @font-face {
       font-family: 'GalmuriCondensed';
       src: url('fonts/GalmuriCondensed.woff2') format('woff2');
@@ -17,7 +17,6 @@
     * {
       font-family: 'GalmuriCondensed', monospace;
       -webkit-font-smoothing: none;
-      -moz-osx-font-smoothing: grayscale;
       box-sizing: border-box;
     }
 
@@ -83,32 +82,52 @@
       font-weight: bold;
     }
 
-    /* ===== 오른쪽 메인 ===== */
+    /* ===== 오른쪽 ===== */
     .main-content {
       width: 72%;
       padding-left: 20px;
-      overflow-y: auto;
       display: flex;
       flex-direction: column;
     }
 
-    .main-content h3 {
+    /* 탭 메뉴 */
+    .menu-tabs {
+      margin-bottom: 10px;
+    }
+
+    .menu-tabs button {
+      background: #eee;
+      border: 1px solid #999;
+      padding: 3px 8px;
+      margin-right: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .menu-tabs button.active {
+      background: white;
+      border-bottom: 1px solid white;
+      font-weight: bold;
+    }
+
+    .tab-page {
+      flex-grow: 1;
+      overflow-y: auto;
+    }
+
+    h3 {
       font-size: 16px;
       color: var(--cy-blue);
       border-bottom: 1px dotted #ccc;
-      padding-bottom: 8px;
-      margin: 0 0 15px 0;
+      padding-bottom: 6px;
+      margin-top: 0;
     }
 
     /* ===== 방명록 ===== */
-    #guestbook-list {
-      flex-grow: 1;
-    }
-
     .guestbook-entry {
       background: var(--bg-gray);
       padding: 12px;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
       border: 1px solid #eee;
       border-radius: 5px;
       line-height: 1.5;
@@ -116,13 +135,12 @@
 
     .ai-reply {
       color: var(--cy-orange);
-      margin-top: 8px;
+      margin-top: 6px;
       padding-top: 6px;
       border-top: 1px dotted #ccc;
       font-weight: bold;
     }
 
-    /* ===== 입력 ===== */
     .input-area {
       margin-top: 10px;
       background: #f9f9f9;
@@ -137,21 +155,15 @@
       padding: 8px;
       resize: none;
       outline: none;
-      font-family: inherit;
     }
 
-    button {
+    button.send {
       background: #fff;
       border: 1px solid #999;
       padding: 4px 12px;
       cursor: pointer;
       float: right;
-      margin-top: 8px;
-      font-family: inherit;
-    }
-
-    button:hover {
-      background: #eee;
+      margin-top: 6px;
     }
   </style>
 </head>
@@ -160,89 +172,125 @@
   <div class="wrapper">
     <div class="white-box">
 
-      <!-- 왼쪽 프로필 -->
+      <!-- 왼쪽 -->
       <div class="profile">
         <span class="today-is">TODAY IS... <span style="color:red">♥</span></span>
         <img src="https://via.placeholder.com/150" class="profile-img">
         <div style="font-size:12px; color:#666; line-height:1.6;">
-          난... ㄱㅏ끔... <br>
-          눈물을 흘린ㄷㅏ... <br>
+          난... ㄱㅏ끔...<br>
+          눈물을 흘린ㄷㅏ...<br>
           <span class="highlight">퍼가요~♡</span>
         </div>
         <hr style="border:0.5px dashed #eee; margin:15px 0;">
         <p style="color: var(--cy-blue);"><b>TODAY 486<br>TOTAL 12345</b></p>
       </div>
 
-      <!-- 오른쪽 메인 -->
+      <!-- 오른쪽 -->
       <div class="main-content">
-        <h3>GUESTBOOK <small style="font-size:10px;">방명록에 흔적 남겨주세효..</small></h3>
 
-        <div id="guestbook-list">
-          <div class="guestbook-entry">
-            <b>익명:</b> 오빠 오늘도 잘생겼다…
-            <div class="ai-reply">ㄴ 주인장: 그런 말 쉽게 하지마ㅋ</div>
+        <!-- 메뉴 -->
+        <div class="menu-tabs">
+          <button class="active" onclick="showTab('home')">홈</button>
+          <button onclick="showTab('photo')">사진첩</button>
+          <button onclick="showTab('guestbook')">방명록</button>
+        </div>
+
+        <!-- 홈 -->
+        <div id="tab-home" class="tab-page">
+          <h3>Updated news</h3>
+          <p>오늘 기분: 😐</p>
+          <p>갑자기 싸이월드 감성 미쳐버림</p>
+        </div>
+
+        <!-- 사진첩 -->
+        <div id="tab-photo" class="tab-page" style="display:none;">
+          <h3>사진첩</h3>
+          <img src="https://via.placeholder.com/350" style="width:100%; border:1px solid #ccc;">
+          <p>📸 2005.06.21</p>
+        </div>
+
+        <!-- 방명록 -->
+        <div id="tab-guestbook" class="tab-page" style="display:none;">
+          <h3>GUESTBOOK</h3>
+
+          <div id="guestbook-list">
+            <div class="guestbook-entry">
+              <b>익명:</b> 오빠 오늘도 잘생겼다…
+              <div class="ai-reply">ㄴ 주인장: 그런 말 쉽게 하지마ㅋ</div>
+            </div>
+          </div>
+
+          <div class="input-area">
+            <textarea id="user-msg" placeholder="일촌 신청하고 가세효..."></textarea>
+            <button class="send" onclick="postMsg()">확인</button>
           </div>
         </div>
 
-        <div class="input-area">
-          <textarea id="user-msg" placeholder="일촌 신청하고 가세효..."></textarea>
-          <button onclick="postMsg()">확인</button>
-        </div>
       </div>
-
     </div>
   </div>
 
   <script>
-    /* ===== 가짜 AI 답글 프리셋 ===== */
+    /* ===== 탭 전환 ===== */
+    function showTab(name) {
+      ['home','photo','guestbook'].forEach(t => {
+        document.getElementById('tab-' + t).style.display = 'none';
+      });
+      document.getElementById('tab-' + name).style.display = 'block';
+
+      document.querySelectorAll('.menu-tabs button').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    /* ===== 답글 프리셋 ===== */
     const replies = {
-      love: [
-        "ㅎr.. 이런 말 들으면 좀 위험한데?",
-        "너 방명록 너무 과감한 거 아냐..",
-        "이런 말 쉽게 하면 안 되는 거 알지;",
-        "갑자기 심장에 무리 옴;"
-      ],
-      friend: [
-        "일촌은 천천히 생각해볼게",
-        "촌수는 마음으로 재는 거임",
-        "우리 이미 아는 사이 같은데?",
-        "일촌 신청은 조용히 해주라"
-      ],
       normal: [
         "흔적 남긴 거 봤어",
-        "방명록 감성 나쁘지 않네",
-        "오늘은 기분 좋아서 답글 남김",
-        "이런 글 좋아함",
-        "보고 그냥 지나칠 수가 없었음"
+        "이런 글 싫어하진 않음",
+        "보고 그냥 못 지나침"
+      ],
+      love: [
+        "이런 말 너무 쉽게 하지마;",
+        "갑자기 심장 무리옴",
+        "설레게 하지 말라고 했잖아"
+      ],
+      rumor: [
+        "그런 소문 어디서 들은 거임?",
+        "믿을 거면 직접 보던가",
+        "말이 참 빨리 도네"
+      ],
+      future: [
+        "아직은 비밀로 할게",
+        "그런 거 굳이 말 안 해도 되잖아",
+        "꿈은 혼자 간직하는 거임"
       ]
     };
 
     function pickReply(msg) {
-      if (msg.includes("좋아") || msg.includes("사랑")) return replies.love;
-      if (msg.includes("일촌") || msg.includes("친구")) return replies.friend;
+      if (msg.includes("좋아") || msg.includes("사귈")) return replies.love;
+      if (msg.includes("사귀는") || msg.includes("소문")) return replies.rumor;
+      if (msg.includes("꿈")) return replies.future;
       return replies.normal;
     }
 
     function postMsg() {
-      const msgInput = document.getElementById('user-msg');
+      const input = document.getElementById('user-msg');
       const list = document.getElementById('guestbook-list');
-      const userMsg = msgInput.value.trim();
-      if (!userMsg) return;
+      const msg = input.value.trim();
+      if (!msg) return;
 
+      const id = 'r-' + Date.now();
       const entry = document.createElement('div');
       entry.className = 'guestbook-entry';
-      const id = 'r-' + Date.now();
-
       entry.innerHTML = `
-        <b>익명:</b> ${userMsg}
+        <b>익명:</b> ${msg}
         <div class="ai-reply" id="${id}">주인장이 생각 중... (두근)</div>
       `;
-
       list.prepend(entry);
-      msgInput.value = '';
+      input.value = '';
 
       setTimeout(() => {
-        const pool = pickReply(userMsg);
+        const pool = pickReply(msg);
         const reply = pool[Math.floor(Math.random() * pool.length)];
         document.getElementById(id).innerText = 'ㄴ 주인장: ' + reply;
       }, 800 + Math.random() * 1200);
