@@ -201,15 +201,22 @@
         "너 방명록 너무 과감한 거 아냐..",
         "이런 말 쉽게 하면 안 되는 거 알지;",
         "갑자기 심장에 무리 옴;"
+        "...이런 건 반칙이야"
+        "오늘은 이런 말 들을 기분 아닌데ㅋ",
+        "괜히 설레게 만들지마",
+        "이런 말 쉽게 하면 안 되는 거 알지;"
       ],
       friend: [
         "일촌은 천천히 생각해볼게",
         "촌수는 마음으로 재는 거임",
+        "촌수 늘리는 거 별로 안 좋아함"
+        "일촌 신청 이유부터 써줘"
+        "일촌은 가볍게 하는 거 아님"
         "우리 이미 아는 사이 같은데?",
         "일촌 신청은 조용히 해주라"
       ],
       normal: [
-        "흔적 남긴 거 봤어",
+        "방명록 관리 중이었음",
         "방명록 감성 나쁘지 않네",
         "오늘은 기분 좋아서 답글 남김",
         "이런 글 좋아함",
@@ -222,7 +229,12 @@
       if (msg.includes("일촌") || msg.includes("친구")) return replies.friend;
       return replies.normal;
     }
-
+    
+    function addCyEnding(text) {
+  const endings = ["", "..", "...", ";;", "ㅋ", "ㅎㅎ"];
+  return text + endings[Math.floor(Math.random() * endings.length)];
+    }
+    
     function postMsg() {
       const msgInput = document.getElementById('user-msg');
       const list = document.getElementById('guestbook-list');
@@ -244,9 +256,11 @@
       setTimeout(() => {
         const pool = pickReply(userMsg);
         const reply = pool[Math.floor(Math.random() * pool.length)];
-        document.getElementById(id).innerText = 'ㄴ 주인장: ' + reply;
+        document.getElementById(id).innerText =
+          'ㄴ 주인장: ' + addCyEnding(reply);
       }, 800 + Math.random() * 1200);
     }
   </script>
 </body>
+
 </html>
