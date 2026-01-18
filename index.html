@@ -1,300 +1,224 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>☆-..- 2005년의 어느 날 -..-☆</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>☆-..- 2005년의 어느 날 -..-☆</title>
 
-  <style>
-    /* ===== 갈무리 콘덴스드 ===== */
-    @font-face {
-      font-family: 'GalmuriCondensed';
-      src: url('fonts/GalmuriCondensed.woff2') format('woff2');
-      font-weight: normal;
-      font-style: normal;
-    }
+<style>
+@font-face {
+  font-family: 'GalmuriCondensed';
+  src: url('fonts/GalmuriCondensed.woff2') format('woff2');
+}
 
-    * {
-      font-family: 'GalmuriCondensed', monospace;
-      -webkit-font-smoothing: none;
-      box-sizing: border-box;
-    }
+* {
+  font-family: 'GalmuriCondensed', monospace;
+  box-sizing: border-box;
+}
 
-    :root {
-      --main-blue: #8cc6d1;
-      --bg-gray: #f6f6f6;
-      --cy-orange: #ff6600;
-      --cy-blue: #3b5998;
-    }
+body {
+  background:#b1b1b1;
+  display:flex;
+  justify-content:center;
+  padding-top:40px;
+  margin:0;
+}
 
-    body {
-      background-color: #b1b1b1;
-      display: flex;
-      justify-content: center;
-      padding-top: 40px;
-      margin: 0;
-      font-size: 14px;
-    }
+.wrapper {
+  background:#ff9fa0;
+  padding:18px;
+  border-radius:12px;
+  width:900px;
+  height:560px;
+}
 
-    .wrapper {
-      background-color: var(--main-blue);
-      padding: 25px 15px 15px 25px;
-      border-radius: 10px;
-      width: 850px;
-      height: 550px;
-      border: 1px solid #777;
-    }
+.white-box {
+  background:white;
+  border-radius:8px;
+  height:100%;
+  display:flex;
+  position:relative;
+  padding:15px;
+}
 
-    .white-box {
-      background: white;
-      border: 1px solid #777;
-      border-radius: 8px;
-      height: 100%;
-      display: flex;
-      padding: 15px;
-    }
+/* ===== 왼쪽 프로필 ===== */
+.profile {
+  width:26%;
+  border-right:1px dashed #ccc;
+  padding-right:12px;
+  text-align:center;
+  font-size:13px;
+}
 
-    /* ===== 왼쪽 프로필 ===== */
-    .profile {
-      width: 28%;
-      border-right: 1px dashed #ccc;
-      padding-right: 15px;
-      text-align: center;
-      font-size: 13px;
-    }
+.profile img {
+  width:100%;
+  border:1px solid #ccc;
+  margin-bottom:10px;
+}
 
-    .profile-img {
-      width: 100%;
-      border: 1px solid #ddd;
-      margin-bottom: 15px;
-      filter: contrast(1.1) brightness(1.05);
-    }
+/* ===== 가운데 콘텐츠 ===== */
+.content {
+  width:60%;
+  padding:0 15px;
+}
 
-    .today-is {
-      color: var(--cy-orange);
-      font-weight: bold;
-      margin-bottom: 10px;
-      display: block;
-    }
+.tab-page {
+  display:none;
+  height:100%;
+  overflow-y:auto;
+}
 
-    .highlight {
-      color: var(--cy-orange);
-      font-weight: bold;
-    }
+.tab-page.active {
+  display:block;
+}
 
-    /* ===== 오른쪽 ===== */
-    .main-content {
-      width: 72%;
-      padding-left: 20px;
-      display: flex;
-      flex-direction: column;
-    }
+h3 {
+  font-size:15px;
+  border-bottom:1px dotted #ccc;
+  margin:0 0 10px;
+}
 
-    /* 탭 메뉴 */
-    .menu-tabs {
-      margin-bottom: 10px;
-    }
+/* ===== 오른쪽 책갈피 메뉴 ===== */
+.bookmark {
+  width:14%;
+  position:relative;
+}
 
-    .menu-tabs button {
-      background: #eee;
-      border: 1px solid #999;
-      padding: 3px 8px;
-      margin-right: 4px;
-      cursor: pointer;
-      font-size: 12px;
-    }
+.bookmark button {
+  display:block;
+  width:100%;
+  margin-bottom:6px;
+  padding:6px 4px;
+  background:#ff6b6b;
+  border:none;
+  color:white;
+  font-size:12px;
+  cursor:pointer;
+  border-radius:0 6px 6px 0;
+}
 
-    .menu-tabs button.active {
-      background: white;
-      border-bottom: 1px solid white;
-      font-weight: bold;
-    }
+.bookmark button.active {
+  background:#d94b4b;
+  font-weight:bold;
+}
 
-    .tab-page {
-      flex-grow: 1;
-      overflow-y: auto;
-    }
+/* ===== 방명록 ===== */
+.guestbook-entry {
+  background:#f6f6f6;
+  padding:10px;
+  margin-bottom:10px;
+  border-radius:5px;
+}
 
-    h3 {
-      font-size: 16px;
-      color: var(--cy-blue);
-      border-bottom: 1px dotted #ccc;
-      padding-bottom: 6px;
-      margin-top: 0;
-    }
+.ai-reply {
+  color:#ff6600;
+  margin-top:6px;
+  border-top:1px dotted #ccc;
+  padding-top:4px;
+}
 
-    /* ===== 방명록 ===== */
-    .guestbook-entry {
-      background: var(--bg-gray);
-      padding: 12px;
-      margin-bottom: 12px;
-      border: 1px solid #eee;
-      border-radius: 5px;
-      line-height: 1.5;
-    }
+.input-area textarea {
+  width:100%;
+  height:40px;
+}
 
-    .ai-reply {
-      color: var(--cy-orange);
-      margin-top: 6px;
-      padding-top: 6px;
-      border-top: 1px dotted #ccc;
-      font-weight: bold;
-    }
-
-    .input-area {
-      margin-top: 10px;
-      background: #f9f9f9;
-      padding: 10px;
-      border-top: 2px solid var(--main-blue);
-    }
-
-    textarea {
-      width: 96%;
-      height: 40px;
-      border: 1px solid #ccc;
-      padding: 8px;
-      resize: none;
-      outline: none;
-    }
-
-    button.send {
-      background: #fff;
-      border: 1px solid #999;
-      padding: 4px 12px;
-      cursor: pointer;
-      float: right;
-      margin-top: 6px;
-    }
-  </style>
+.input-area button {
+  float:right;
+  margin-top:5px;
+}
+</style>
 </head>
 
 <body>
-  <div class="wrapper">
-    <div class="white-box">
+<div class="wrapper">
+<div class="white-box">
 
-      <!-- 왼쪽 -->
-      <div class="profile">
-        <span class="today-is">TODAY IS... <span style="color:red">♥</span></span>
-        <img src="https://via.placeholder.com/150" class="profile-img">
-        <div style="font-size:12px; color:#666; line-height:1.6;">
-          난... ㄱㅏ끔...<br>
-          눈물을 흘린ㄷㅏ...<br>
-          <span class="highlight">퍼가요~♡</span>
-        </div>
-        <hr style="border:0.5px dashed #eee; margin:15px 0;">
-        <p style="color: var(--cy-blue);"><b>TODAY 486<br>TOTAL 12345</b></p>
-      </div>
-
-      <!-- 오른쪽 -->
-      <div class="main-content">
-
-        <!-- 메뉴 -->
-        <div class="menu-tabs">
-          <button class="active" onclick="showTab('home')">홈</button>
-          <button onclick="showTab('photo')">사진첩</button>
-          <button onclick="showTab('guestbook')">방명록</button>
-        </div>
-
-        <!-- 홈 -->
-        <div id="tab-home" class="tab-page">
-          <h3>Updated news</h3>
-          <p>오늘 기분: 😐</p>
-          <p>갑자기 싸이월드 감성 미쳐버림</p>
-        </div>
-
-        <!-- 사진첩 -->
-        <div id="tab-photo" class="tab-page" style="display:none;">
-          <h3>사진첩</h3>
-          <img src="https://via.placeholder.com/350" style="width:100%; border:1px solid #ccc;">
-          <p>📸 2005.06.21</p>
-        </div>
-
-        <!-- 방명록 -->
-        <div id="tab-guestbook" class="tab-page" style="display:none;">
-          <h3>GUESTBOOK</h3>
-
-          <div id="guestbook-list">
-            <div class="guestbook-entry">
-              <b>익명:</b> 오빠 오늘도 잘생겼다…
-              <div class="ai-reply">ㄴ 주인장: 그런 말 쉽게 하지마ㅋ</div>
-            </div>
-          </div>
-
-          <div class="input-area">
-            <textarea id="user-msg" placeholder="일촌 신청하고 가세효..."></textarea>
-            <button class="send" onclick="postMsg()">확인</button>
-          </div>
-        </div>
-
-      </div>
-    </div>
+  <!-- 왼쪽 -->
+  <div class="profile">
+    <b>TODAY IS ♥</b><br><br>
+    <img src="https://via.placeholder.com/150">
+    난… ㄱㅏ끔…<br>눈물을 흘린ㄷㅏ…<br>
+    <span style="color:#ff6600">퍼가요~♡</span>
   </div>
 
-  <script>
-    /* ===== 탭 전환 ===== */
-    function showTab(name) {
-      ['home','photo','guestbook'].forEach(t => {
-        document.getElementById('tab-' + t).style.display = 'none';
-      });
-      document.getElementById('tab-' + name).style.display = 'block';
+  <!-- 가운데 -->
+  <div class="content">
 
-      document.querySelectorAll('.menu-tabs button').forEach(b => b.classList.remove('active'));
-      event.target.classList.add('active');
-    }
+    <!-- 홈 -->
+    <div id="home" class="tab-page active">
+      <h3>Updated News</h3>
+      오늘 기분: 😐<br><br>
+      갑자기 싸이월드 감성 폭주함
+    </div>
 
-    /* ===== 답글 프리셋 ===== */
-    const replies = {
-      normal: [
-        "흔적 남긴 거 봤어",
-        "이런 글 싫어하진 않음",
-        "보고 그냥 못 지나침"
-      ],
-      love: [
-        "이런 말 너무 쉽게 하지마;",
-        "갑자기 심장 무리옴",
-        "설레게 하지 말라고 했잖아"
-      ],
-      rumor: [
-        "그런 소문 어디서 들은 거임?",
-        "믿을 거면 직접 보던가",
-        "말이 참 빨리 도네"
-      ],
-      future: [
-        "아직은 비밀로 할게",
-        "그런 거 굳이 말 안 해도 되잖아",
-        "꿈은 혼자 간직하는 거임"
-      ]
-    };
+    <!-- 사진첩 -->
+    <div id="photo" class="tab-page">
+      <h3>사진첩</h3>
+      <img src="https://via.placeholder.com/300" style="width:100%;">
+      <p>📸 2005.06.21</p>
+    </div>
 
-    function pickReply(msg) {
-      if (msg.includes("좋아") || msg.includes("사귈")) return replies.love;
-      if (msg.includes("사귀는") || msg.includes("소문")) return replies.rumor;
-      if (msg.includes("꿈")) return replies.future;
-      return replies.normal;
-    }
+    <!-- 방명록 -->
+    <div id="guestbook" class="tab-page">
+      <h3>방명록</h3>
 
-    function postMsg() {
-      const input = document.getElementById('user-msg');
-      const list = document.getElementById('guestbook-list');
-      const msg = input.value.trim();
-      if (!msg) return;
+      <div id="guestbook-list">
+        <div class="guestbook-entry">
+          <b>익명:</b> 오빠 오늘도 잘생겼다
+          <div class="ai-reply">ㄴ 주인장: 그런 말 쉽게 하지마ㅋ</div>
+        </div>
+      </div>
 
-      const id = 'r-' + Date.now();
-      const entry = document.createElement('div');
-      entry.className = 'guestbook-entry';
-      entry.innerHTML = `
-        <b>익명:</b> ${msg}
-        <div class="ai-reply" id="${id}">주인장이 생각 중... (두근)</div>
-      `;
-      list.prepend(entry);
-      input.value = '';
+      <div class="input-area">
+        <textarea id="msg" placeholder="일촌 신청하고 가세효..."></textarea>
+        <button onclick="postMsg()">확인</button>
+      </div>
+    </div>
 
-      setTimeout(() => {
-        const pool = pickReply(msg);
-        const reply = pool[Math.floor(Math.random() * pool.length)];
-        document.getElementById(id).innerText = 'ㄴ 주인장: ' + reply;
-      }, 800 + Math.random() * 1200);
-    }
-  </script>
+  </div>
+
+  <!-- 오른쪽 책갈피 -->
+  <div class="bookmark">
+    <button class="active" onclick="openTab('home',this)">홈</button>
+    <button onclick="openTab('photo',this)">사진첩</button>
+    <button onclick="openTab('guestbook',this)">방명록</button>
+  </div>
+
+</div>
+</div>
+
+<script>
+const replies = [
+  "이런 말 너무 쉽게 하지마;",
+  "보고 그냥 못 지나쳤음",
+  "방명록 감성 괜찮네",
+  "갑자기 심장 무리옴"
+];
+
+function openTab(id, btn) {
+  document.querySelectorAll('.tab-page').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+
+  document.querySelectorAll('.bookmark button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function postMsg() {
+  const msg = document.getElementById('msg').value.trim();
+  if(!msg) return;
+
+  const box = document.createElement('div');
+  box.className='guestbook-entry';
+  box.innerHTML = `<b>익명:</b> ${msg}<div class="ai-reply">주인장 생각중...</div>`;
+  document.getElementById('guestbook-list').prepend(box);
+  document.getElementById('msg').value='';
+
+  setTimeout(()=>{
+    box.querySelector('.ai-reply').innerText =
+      'ㄴ 주인장: ' + replies[Math.floor(Math.random()*replies.length)];
+  },800);
+}
+</script>
+
 </body>
 </html>
